@@ -33,7 +33,7 @@ lubuntu)
 	echo "DERIVATIVES:"
 	echo -e "lubuntu" # \n edubuntu\n kubuntu\n mythbuntu\n ubuntu\n core\n server\n ec2\n studio\n xubuntu"
 	echo "ARCHITECTURES:"
-	echo -e "powerpc" # \n i386\n amd64\n amd64mac\n armhf\n armhfomap\n armhfomap4"
+	echo -e "powerpc\n i386" # \n amd64\n amd64mac\n armhf\n armhfomap\n armhfomap4"
 	echo "more to come"
 	exit
 	;;
@@ -45,8 +45,8 @@ esac
 ### FIXME: add other options-- see comments
 # make sure we have 2nd argument (architecture)
 case $2 in
-#i386|amd64|amd64mac|armhf|armhfomap|armhfomap4)
-powerpc)
+#amd64|amd64mac|armhf|armhfomap|armhfomap4)
+powerpc|i386)
 	architecture="$2"
 	;;
 *)
