@@ -104,7 +104,7 @@ fi
 sudo dd if="$iso_filename" of=/dev/cdrom
 iso_size="$(ls -l | grep -m 1 ${iso_filename} | awk '{print $5}')"
 dd_count="$((iso_size / 2048))"
-dd_cd="$(sudo dd if=/dev/cdrom bs=2048 count="${dd_count}" | md5sum | awk '{print $1}')"
+dd_cd="$(sudo dd if=/dev/cdrom bs=2048 count=${dd_count} | md5sum | awk '{print $1}')"
 
 # compare iso md5sum and cd md5sum
 if [ "$iso_md5sum"  == "$dd_cd"	];
