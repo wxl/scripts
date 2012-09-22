@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# make-ubuntu-iso v2
+# make-ubuntu-iso v1.1
 # author: walter lapchynski/wxl
 # contact: carsrcoffins23@yahoo.com
 # license: public domain
@@ -22,7 +22,7 @@ syntax_error () {
 	exit
 }
 
-### FIXME: add other options
+### FIXME: add other options-- see comments
 # make sure we have 1st argument (derivative)
 case $1 in
 #edubuntu|kubuntu|mythbuntu|ubuntu|core|server|ec2|studio|xubuntu)
@@ -31,11 +31,9 @@ lubuntu)
 	;;
 --long|-l)
 	echo "DERIVATIVES:"
-#	echo -e "edubuntu\n kubuntu\n mythbuntu\n ubuntu\n core\n server\n ec2\n studio\n xubuntu"
-	echo "lubuntu"
+	echo -e "lubuntu" #	\n edubuntu\n kubuntu\n mythbuntu\n ubuntu\n core\n server\n ec2\n studio\n xubuntu"
 	echo "ARCHITECTURES:"
-# echo -e "i386\n amd64\n amd64mac\n armhf\n armhfomap\n armhfomap4"
-  echo "powerpc"
+	echo -e "powerpc" # \m i386\n amd64\n amd64mac\n armhf\n armhfomap\n armhfomap4"
 	echo "more to come"
 	exit
 	;;
@@ -44,7 +42,7 @@ lubuntu)
 	;;
 esac
 
-### FIXME: add other options
+### FIXME: add other options-- see comments
 # make sure we have 2nd argument (architecture)
 case $2 in
 #i386|amd64|amd64mac|armhf|armhfomap|armhfomap4)
