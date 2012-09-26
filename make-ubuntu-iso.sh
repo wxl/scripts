@@ -3,6 +3,11 @@
 # make-ubuntu-iso v1.1
 # author: walter lapchynski/wxl
 # contact: carsrcoffins23@yahoo.com
+
+# modified by: sanchitgangwar
+# contact: sanchitgangwar@outlook.com
+# date: 23 sept 2012
+
 # license: public domain
 # born: 21 sept 2012
 
@@ -100,17 +105,43 @@ else
 	exit
 fi 
 
+# ask for CDROM or USB
+echo -n "Press C to burn to CDROM or any other key to burn to USB: "
+read burn_option
+
+if [[ "$burn_option" == "c" || "$burn_option" == "C" ]]; then
+	destination="/dev/cdrom"
+else
+	# ask for the name of the USB device
+	echo -n "Enter the name of the USB device (e.g. sdb) OR press L/l for list: "
+	read usb_name
+
+	while ! ls "/dev/$usb_name[0-9]" &> /dev/null
+	do
+		if [[ "$usb_name" == "L" || "$usb_name" == "l" ]]; then
+
+			df -h | awk '
+			BEGIN { printf("%-10s %7s %7s %7s %5s  %s\n", "Filesystem", "Size", "Used", "Avail", "Use%", "Mounted on")}
+			$1 ~ "/dev/sd[b-z][0-9]?" { printf("%-10s %7s %7s %7s %5s  %s\n", $1, $2, $3, $4, $5, $6)}
+			END { printf("\n") }'
+			echo -n "USB device (e.g. sdb): "
+			read usb_name
+		fi
+	done
+	destination="/dev/$usb_name"
+fi
+
 # copy the iso to the cd and get its md5sum
-sudo dd if="$iso_filename" of=/dev/cdrom
+sudo dd if="$iso_filename" of="$destination"
 iso_size="$(ls -l | grep -m 1 ${iso_filename} | awk '{print $5}')"
 dd_count="$((iso_size / 2048))"
-dd_cd="$(sudo dd if=/dev/cdrom bs=2048 count=${dd_count} | md5sum | awk '{print $1}')"
+dd_media="$(sudo dd if=\"$destination\" bs=2048 count=${dd_count} | md5sum | awk '{print $1}')"
 
 # compare iso md5sum and cd md5sum
-if [ "$iso_md5sum"  == "$dd_cd"	];
+if [ "$iso_md5sum"  == "$dd_media"	];
 then
-	echo "disc passes"
+	echo "Media passed."
 else
-	echo "disc fails"
+	echo "Media failed."
 	exit
 fi
