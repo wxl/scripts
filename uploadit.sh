@@ -9,6 +9,9 @@
 # what it does: uploads Community Audio to Internet Archive
 # make sure you have cURL!
 
+# this methodology supercedes the need for API keys required by the S3-like API:
+# http://archive.org/help/abouts3.txt
+
 # first let's get our cookie
 curl --location --dump-header cookies http://archive.org/account/login.php >/dev/null 2>&1
 
